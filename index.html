@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Weton Jawa Lengkap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <header class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-amber-800 mb-2">Kalkulator Weton Jawa Lengkap</h1>
+                <p class="text-amber-700">Menghitung hari pasaran, neptu, dan karakter berdasarkan weton Jawa</p>
+                <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+            </header>
+            <!-- Main Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8 batik-pattern">
+                <div class="bg-javanese bg-amber-700 p-6 text-white">
+                    <h2 class="text-2xl font-semibold flex items-center">
+                        <i class="fas fa-calendar-alt mr-3"></i> Masukkan Tanggal Lahir
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div>
+                            <label class="block text-amber-800 font-medium mb-2" for="day">Tanggal</label>
+                            <select id="day" class="w-full px-4 py-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <option value="">Pilih Tanggal</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-amber-800 font-medium mb-2" for="month">Bulan</label>
+                            <select id="month" class="w-full px-4 py-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                                <option value="">Pilih Bulan</option>
+                                <option value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-amber-800 font-medium mb-2" for="year">Tahun</label>
+                            <input type="number" id="year" min="1900" max="2100" placeholder="Masukkan tahun"
+                                   class="w-full px-4 py-2 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
+                        </div>
+                    </div>
+                    <button id="calculateBtn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-calculator mr-2"></i> Hitung Weton Lengkap
+                    </button>
+                </div>
+            </div>
+            <!-- Result Section (Initially Hidden) -->
+            <div id="resultSection" class="hidden bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <div class="bg-javanese bg-amber-800 p-6 text-white">
+                    <h2 class="text-2xl font-semibold flex items-center">
+                        <i class="fas fa-star mr-3"></i> Hasil Perhitungan Weton
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <!-- Basic Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <!-- Day Result -->
+                        <div class="result-card bg-amber-50 p-4 rounded-lg border border-amber-200">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-sun mr-2"></i> Hari Kelahiran
+                            </h3>
+                            <div class="flex items-center">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-calendar-day text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p id="gregorianDay" class="font-bold text-lg text-amber-800">-</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pasaran Result -->
+                        <div class="result-card bg-amber-50 p-4 rounded-lg border border-amber-200">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-moon mr-2"></i> Pasaran Jawa
+                            </h3>
+                            <div class="flex items-center">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-star-and-crescent text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p id="pasaranDay" class="font-bold text-lg text-amber-800">-</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Neptu Result -->
+                        <div class="result-card bg-amber-50 p-4 rounded-lg border border-amber-200">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-calculator mr-2"></i> Total Neptu
+                            </h3>
+                            <div class="flex items-center">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-sort-numeric-up-alt text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p id="totalNeptu" class="font-bold text-2xl text-amber-800">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Detailed Results -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Element -->
+                        <div class="result-card bg-white p-4 rounded-lg border border-amber-200 shadow-sm">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-atom mr-2"></i> Unsur & Elemen
+                            </h3>
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-leaf text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p id="element" class="font-medium text-amber-800">-</p>
+                                    <p id="elementDesc" class="text-sm text-gray-600 mt-1">-</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Jodoh -->
+                        <div class="result-card bg-white p-4 rounded-lg border border-amber-200 shadow-sm">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-heart mr-2"></i> Kecocokan Jodoh
+                            </h3>
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-user-friends text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p id="jodoh" class="font-medium text-amber-800">-</p>
+                                    <p id="jodohDesc" class="text-sm text-gray-600 mt-1">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Character Traits -->
+                    <div class="result-card bg-white p-4 rounded-lg border border-amber-200 shadow-sm mb-6">
+                        <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                            <i class="fas fa-user mr-2"></i> Karakter & Sifat
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="text-sm font-medium text-amber-700 mb-2 flex items-center">
+                                    <i class="fas fa-thumbs-up mr-2"></i> Kelebihan
+                                </h4>
+                                <ul id="strengths" class="list-disc pl-5 text-sm text-gray-700">
+                                    <li>-</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-amber-700 mb-2 flex items-center">
+                                    <i class="fas fa-thumbs-down mr-2"></i> Kekurangan
+                                </h4>
+                                <ul id="weaknesses" class="list-disc pl-5 text-sm text-gray-700">
+                                    <li>-</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Career and Advice -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Career -->
+                        <div class="result-card bg-white p-4 rounded-lg border border-amber-200 shadow-sm">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-briefcase mr-2"></i> Rekomendasi Karir
+                            </h3>
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-chart-line text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <ul id="career" class="list-disc pl-5 text-sm text-gray-700">
+                                        <li>-</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Advice -->
+                        <div class="result-card bg-white p-4 rounded-lg border border-amber-200 shadow-sm">
+                            <h3 class="font-semibold text-amber-800 mb-3 flex items-center">
+                                <i class="fas fa-lightbulb mr-2"></i> Nasihat Hidup
+                            </h3>
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-hands-helping text-amber-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <p id="advice" class="text-sm text-gray-700">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Detailed Info About Weton -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mt-8">
+                <div class="bg-javanese bg-amber-700 p-6 text-white">
+                    <h2 class="text-2xl font-semibold flex items-center">
+                        <i class="fas fa-book mr-3"></i> Penjelasan Detail Weton Jawa
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <div class="prose text-gray-700">
+                        <h3 class="text-xl font-semibold text-amber-800 mb-3">Apa Itu Weton Jawa?</h3>
+                        <p class="mb-4">Weton dalam tradisi Jawa adalah gabungan antara hari dalam kalender Masehi (Senin sampai Minggu) dengan hari pasaran Jawa (Legi, Pahing, Pon, Wage, Kliwon). Perhitungan weton sangat penting dalam budaya Jawa karena diyakini dapat menentukan karakter, nasib, dan kecocokan seseorang.</p>
+                        <h3 class="text-xl font-semibold text-amber-800 mb-3 mt-5">Siklus Weton</h3>
+                        <p class="mb-4">Siklus weton berulang setiap 35 hari (7 hari biasa × 5 pasaran). Setiap kombinasi hari dan pasaran memiliki makna dan pengaruh tersendiri terhadap kehidupan seseorang.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h4 class="font-semibold text-amber-800 mb-2">Neptu Hari:</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li><strong>Minggu</strong>: 5 (Lambang kemuliaan dan kejayaan)</li>
+                                    <li><strong>Senin</strong>: 4 (Lambang keseimbangan dan ketenangan)</li>
+                                    <li><strong>Selasa</strong>: 3 (Lambang keberanian dan kekuatan)</li>
+                                    <li><strong>Rabu</strong>: 7 (Lambang kecerdasan dan kebijaksanaan)</li>
+                                    <li><strong>Kamis</strong>: 8 (Lambang rezeki dan kemakmuran)</li>
+                                    <li><strong>Jumat</strong>: 6 (Lambang kesucian dan spiritualitas)</li>
+                                    <li><strong>Sabtu</strong>: 9 (Lambang kesabaran dan ketekunan)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-800 mb-2">Neptu Pasaran:</h4>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li><strong>Legi</strong>: 5 (Manis, harmonis, dan menyenangkan)</li>
+                                    <li><strong>Pahing</strong>: 9 (Kuat, tegas, dan berwibawa)</li>
+                                    <li><strong>Pon</strong>: 7 (Kreatif, inovatif, dan dinamis)</li>
+                                    <li><strong>Wage</strong>: 4 (Praktis, realistis, dan efisien)</li>
+                                    <li><strong>Kliwon</strong>: 8 (Misterius, spiritual, dan bijaksana)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-amber-800 mb-3 mt-5">Makna Total Neptu</h3>
+                        <p class="mb-4">Total neptu diperoleh dari penjumlahan neptu hari dan neptu pasaran. Angka total ini memiliki makna khusus dalam primbon Jawa:</p>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-amber-50 rounded-lg overflow-hidden">
+                                <thead class="bg-amber-200">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-amber-800">Total Neptu</th>
+                                        <th class="px-4 py-2 text-left text-amber-800">Kategori</th>
+                                        <th class="px-4 py-2 text-left text-amber-800">Karakter Umum</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-amber-100">
+                                    <tr>
+                                        <td class="px-4 py-2">5-9</td>
+                                        <td class="px-4 py-2">Rendah</td>
+                                        <td class="px-4 py-2">Sederhana, praktis, realistis</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2">10-14</td>
+                                        <td class="px-4 py-2">Sedang</td>
+                                        <td class="px-4 py-2">Seimbang, adaptif, sosial</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2">15-17</td>
+                                        <td class="px-4 py-2">Tinggi</td>
+                                        <td class="px-4 py-2">Kompleks, dinamis, unik</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3 class="text-xl font-semibold text-amber-800 mb-3 mt-5">Kegunaan Weton</h3>
+                        <p class="mb-4">Weton digunakan dalam berbagai aspek kehidupan masyarakat Jawa:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li><strong>Pernikahan</strong>: Menentukan kecocokan pasangan</li>
+                            <li><strong>Kelahiran</strong>: Memberikan nama yang sesuai</li>
+                            <li><strong>Usaha</strong>: Memilih hari baik memulai bisnis</li>
+                            <li><strong>Kesehatan</strong>: Mengetahui potensi penyakit</li>
+                            <li><strong>Karir</strong>: Memilih profesi yang sesuai</li>
+                            <li><strong>Spiritual</strong>: Menentukan hari baik untuk ritual</li>
+                        </ul>
+                        <div class="bg-amber-100 p-4 rounded-lg border border-amber-200 mt-6">
+                            <h4 class="font-semibold text-amber-800 mb-2 flex items-center">
+                                <i class="fas fa-info-circle mr-2"></i> Catatan Penting
+                            </h4>
+                            <p class="text-sm text-amber-800">Perhitungan weton ini berdasarkan primbon Jawa tradisional. Hasilnya bersifat prediktif dan tidak mutlak. Kehidupan seseorang tetap dipengaruhi oleh usaha, doa, dan lingkungan sekitarnya.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
